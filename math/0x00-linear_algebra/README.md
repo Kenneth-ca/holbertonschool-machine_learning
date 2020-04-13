@@ -1,5 +1,4 @@
 # 0x00. Linear Algebra
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/9/54daaf81421a9b894688.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200413%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200413T135933Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=b33cfb5ec29862b4c9544c64fcf154b5f8b5b8488786b5f5135f22f2128dc92a)
 # Learning Objectives
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 
