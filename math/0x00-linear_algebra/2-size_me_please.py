@@ -9,14 +9,11 @@ def matrix_shape(matrix):
     Returns the shape as a list of integers
     """
     integers = []
-    #Check for list
-    if type(matrix) != list:
-        return [0]
     # Number of rows/elements
     try:
         integers.append(len(matrix))
     except:
-        return [0]
+        pass
     # Number of columns/elements
     try:
         integers.append(len(matrix[0]))
