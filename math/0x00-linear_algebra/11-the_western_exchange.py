@@ -9,4 +9,4 @@ def np_transpose(matrix):
     Needs a matrix as input
     Returns a trasposed matrix
     """
-    return np.transpose(matrix)
+    return matrix.transpose()
