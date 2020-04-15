@@ -2,7 +2,6 @@
 """
 Module to calculate the shape of a matrix using numpy
 """
-import numpy as np
 
 
 def np_shape(matrix):
