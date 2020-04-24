@@ -11,7 +11,7 @@ def poly_derivative(poly):
     >>> print(poly_derivative(poly))
     [3, 0, 3]
     """
-    if type(poly) is not list:
+    if type(poly) is not list or poly == []:
         return None
     elif len(poly) < 2:
         return [0]

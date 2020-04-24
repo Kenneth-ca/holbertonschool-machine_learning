@@ -11,4 +11,9 @@ def summation_i_squared(n):
     >>> print(summation_i_squared(n))
     55
     """
-    return 0 if n < 1 else n ** 2 + summation_i_squared(n - 1)
+    if (type(n) is not int) or (n is None):
+        return None
+    elif n < 1:
+        return 0
+    else:
+        return n ** 2 + summation_i_squared(n - 1)

@@ -13,7 +13,7 @@ def poly_integral(poly, C=0):
     """
     if type(poly) is not list:
         return None
-    elif type(C) is int or type(C):
+    elif type(C) is int or type(C) is float:
         exponent = 0
         derivative = poly.copy()
         for i in range(len(derivative)):
