@@ -16,7 +16,7 @@ def summation_i_squared(n):
     elif n < 1:
         return 0
     else:
+        numbers = range(1, n + 1)
         result = 0
-        for i in range(n + 1):
-            result = (i ** 2) + result
-        return result
+        result = map(lambda i : i ** 2, numbers)
+        return sum(result)
