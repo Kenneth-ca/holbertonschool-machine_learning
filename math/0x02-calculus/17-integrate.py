@@ -11,7 +11,7 @@ def poly_integral(poly, C=0):
     >>> print(poly_integral(poly))
     [0, 5, 1.5, 0, 0.25]
     """
-    if type(poly) is not list:
+    if type(poly) is not list or len(poly) == 0:
         return None
     elif type(C) is int or type(C) is float:
         exponent = 0
