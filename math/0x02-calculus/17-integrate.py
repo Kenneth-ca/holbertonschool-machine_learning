@@ -13,17 +13,17 @@ def poly_integral(poly, C=0):
     """
     if type(poly) is not list or len(poly) == 0:
         return None
-    elif type(C) is int or type(C) is float:
+    elif type(C) is int:
         exponent = 0
-        derivative = poly.copy()
-        for i in range(len(derivative)):
-            if type(derivative[i]) is int or type(derivative[i]) is float:
+        integral = poly.copy()
+        for i in range(len(integral)):
+            if type(integral[i]) is int or type(integral[i]) is float:
                 exponent += 1
-                number = derivative[i] / exponent
-                derivative[i] = int(number) if number % 1 == 0 else number
+                number = integral[i] / exponent
+                integral[i] = int(number) if number % 1 == 0 else number
             else:
                 return None
-        derivative.insert(0, C)
-        return derivative
+        integral.insert(0, C)
+        return integral
     else:
         return None
