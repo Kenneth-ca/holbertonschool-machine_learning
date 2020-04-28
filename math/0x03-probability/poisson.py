@@ -14,7 +14,7 @@ class Poisson:
         """
         Class contructor
         """
-        if data == None:
+        if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
             else:
@@ -25,7 +25,6 @@ class Poisson:
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.lambtha = sum(data) / len(data)
-
 
     def pmf(self, k):
         """
@@ -42,7 +41,6 @@ class Poisson:
             x_factorial *= i
         pmf = e_mean * mean_k / x_factorial
         return pmf
-
 
     def cdf(self, k):
         """
