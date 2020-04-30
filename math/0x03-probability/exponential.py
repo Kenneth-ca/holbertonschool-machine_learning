@@ -26,24 +26,20 @@ class Exponential:
                 raise ValueError("data must contain multiple values")
             self.lambtha = 1 / (sum(data) / len(data))
 
-    def pdf(self, k):
+    def pdf(self, x):
         """
         Probability Density Function for exponential
         """
-        if type(k) is not int:
-            k = int(k)
-        if k < 0:
+        if x < 0:
             return 0
-        pdf = self.lambtha * Exponential.e ** - (self.lambtha * k)
+        pdf = self.lambtha * Exponential.e ** - (self.lambtha * x)
         return pdf
 
-    def cdf(self, k):
+    def cdf(self, x):
         """
         Cumulative Distribution Function for exponential
         """
-        if type(k) is not int:
-            k = int(k)
-        if k < 0:
+        if x < 0:
             return 0
-        cdf = 1 - Exponential.e ** (- self.lambtha * k)
+        cdf = 1 - Exponential.e ** (- self.lambtha * x)
         return cdf
