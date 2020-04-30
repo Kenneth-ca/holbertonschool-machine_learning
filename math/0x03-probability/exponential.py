@@ -14,7 +14,7 @@ class Exponential:
         """
         Class contructor
         """
-        if data == None:
+        if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
             else:
@@ -26,7 +26,6 @@ class Exponential:
                 raise ValueError("data must contain multiple values")
             self.lambtha = 1 / (sum(data) / len(data))
 
-
     def pdf(self, k):
         """
         Probability Density Function for exponential
@@ -37,7 +36,6 @@ class Exponential:
             return 0
         pdf = self.lambtha * Exponential.e ** - (self.lambtha * k)
         return pdf
-
 
     def cdf(self, k):
         """
