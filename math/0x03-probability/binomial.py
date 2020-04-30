@@ -15,7 +15,7 @@ class Binomial:
         Class contructor
         """
         if data is None:
-            if n < 0:
+            if n < 1:
                 raise ValueError("n must be a positive value")
             else:
                 self.n = int(n)
