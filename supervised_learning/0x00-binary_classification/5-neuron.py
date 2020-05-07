@@ -68,9 +68,9 @@ class Neuron:
         :return: no return
         """
         dz = A - Y
-        dw = X.T * dz.T / A.shape[1]
+        dw = np.matmul(X, dz.T) / A.shape[1]
         db = np.sum(dz) / A.shape[1]
-        self.__W = self.__W - alpha * dw
+        self.__W = self.__W - alpha * dw.T
         self.__b = self.__b - alpha * db
 
     @property
