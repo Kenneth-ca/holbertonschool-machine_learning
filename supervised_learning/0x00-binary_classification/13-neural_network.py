@@ -98,10 +98,6 @@ class NeuralNetwork:
         self.__W1 = self.__W1 - alpha * dw1.T
         self.__b1 = self.__b1 - alpha * db1
 
-
-
-
-
     @property
     def W1(self):
         return self.__W1
