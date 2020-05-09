@@ -107,8 +107,8 @@ class DeepNeuralNetwork:
             key_cache = 'A' + str(i + 1)
             key_cache_dw = 'A' + str(i)
             # Activation
-            A = self.__cache[key_cache]
-            A_dw = self.__cache[key_cache_dw]
+            A = cache[key_cache]
+            A_dw = cache[key_cache_dw]
             if i == self.__L - 1:
                 dz = A - Y
             else:
