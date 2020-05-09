@@ -118,8 +118,8 @@ class DeepNeuralNetwork:
                 dz = dz * da
             dw = np.matmul(dz, A_dw.T) / A.shape[1]
             db = np.sum(dz, axis=1, keepdims=True) / A.shape[1]
-        self.__weights[key_w] = self.__weights[key_w] - alpha * dw
-        self.__weights[key_b] = self.__weights[key_b] - alpha * db
+            self.__weights[key_w] = self.__weights[key_w] - alpha * dw
+            self.__weights[key_b] = self.__weights[key_b] - alpha * db
 
     @property
     def cache(self):
