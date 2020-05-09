@@ -99,10 +99,10 @@ class DeepNeuralNetwork:
         :param alpha: the learning rate
         :return: no return
         """
+        m = Y.shape[1]
         for i in reversed(range(self.__L)):
             # create keys to access weights(W), biases(b) and store in cache
             key_w = 'W' + str(i + 1)
-            key_w_calculation = 'W' + str(i + 1 + 1)
             key_b = 'b' + str(i + 1)
             key_cache = 'A' + str(i + 1)
             key_cache_dw = 'A' + str(i)
@@ -111,14 +111,15 @@ class DeepNeuralNetwork:
             A_dw = cache[key_cache_dw]
             if i == self.__L - 1:
                 dz = A - Y
+                W = self.__weights[key_w]
             else:
-                W = self.__weights[key_w_calculation]
                 da = A * (1 - A)
                 dz = np.matmul(W.T, dz)
                 dz = dz * da
-            dw = np.matmul(dz, A_dw.T) / A.shape[1]
-            db = np.sum(dz, axis=1, keepdims=True) / A.shape[1]
-            self.__weights[key_w] = self.__weights[key_w] - alpha * dw
+                W = self.__weights[key_w]
+            dw = np.matmul(A_dw, dz.T) / m
+            db = np.sum(dz, axis=1, keepdims=True) / m
+            self.__weights[key_w] = self.__weights[key_w] - alpha * dw.T
             self.__weights[key_b] = self.__weights[key_b] - alpha * db
 
     @property
