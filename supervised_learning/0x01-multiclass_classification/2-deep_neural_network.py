@@ -76,8 +76,7 @@ class DeepNeuralNetwork:
         :return: the cost
         """
         cost = Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A)
-        cost = np.sum(cost)
-        cost = - cost / A.shape[1]
+        cost = - np.sum(cost) / A.shape[1]
         return cost
 
     def evaluate(self, X, Y):
@@ -213,7 +212,6 @@ class DeepNeuralNetwork:
         """
         try:
             with open(filename, "rb") as fd:
-                loaded = pickle.load(fd)
-                return loaded
+                return pickle.load(fd)
         except FileNotFoundError:
             return None
