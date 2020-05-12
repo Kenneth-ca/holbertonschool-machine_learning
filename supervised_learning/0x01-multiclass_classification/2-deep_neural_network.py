@@ -207,7 +207,6 @@ class DeepNeuralNetwork:
         pickle.dump(self, fileObject)
         fileObject.close()
 
-
     @staticmethod
     def load(filename):
         """
@@ -215,9 +214,8 @@ class DeepNeuralNetwork:
         :return: the loaded object, or None if filename doesn’t exist
         """
         try:
-            fileObject = open(filename, 'rb')
-            loaded = pickle.load(fileObject)
-            fileObject.close()
+            with open(filename, 'rb') as fd:
+                loaded = pickle.load(fd)
             return loaded
         except FileNotFoundError:
             return None
