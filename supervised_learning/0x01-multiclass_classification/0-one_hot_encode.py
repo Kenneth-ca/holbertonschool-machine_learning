@@ -13,10 +13,10 @@ def one_hot_encode(Y, classes):
     :return: a one-hot encoding of Y with shape (classes, m), or None on
     failure
     """
-    if type(classes) is not int or len(Y) != classes:
+    if type(classes) is not int or classes <= Y.max():
         return None
     if type(Y) is not np.ndarray or len(Y) < 1:
         return None
-    one_hot = np.zeros((classes, Y.max() + 1))
-    one_hot[np.arange(classes), Y] = 1
+    one_hot = np.zeros((classes, len(Y)))
+    one_hot[Y, np.arange(len(Y))] = 1
     return one_hot
