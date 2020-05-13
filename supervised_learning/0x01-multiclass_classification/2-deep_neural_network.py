@@ -135,7 +135,7 @@ class DeepNeuralNetwork:
         """
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
-        if iterations < 1:
+        if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
         if type(alpha) is not float:
             raise TypeError("alpha must be a float")
@@ -146,21 +146,26 @@ class DeepNeuralNetwork:
                 raise TypeError("step must be an integer")
             if step <= 0 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
-        cost = []
-        print_step = 0
-        for i in range(iterations + 1):
-            A, cache = self.forward_prop(X)
-            self.gradient_descent(Y, cache, alpha)
-            cost.append(self.cost(Y, A))
 
-            if step and (i == print_step or i == iterations):
+        g_iteration = []
+        g_cost = []
+
+        for i in range(iterations + 1):
+            output, cache = self.forward_prop(X)
+            cost = self.cost(Y, output)
+
+            if step and (i % step == 0 or i == iterations):
                 if verbose is True:
-                    print("Cost after {} iterations: {}".format(i, cost[i]))
-                    print_step += step
+                    print("Cost after {} iterations: {}".format(i, cost))
+                g_iteration.append(i)
+                g_cost.append(cost)
+
+            if i < iterations:
+                self.gradient_descent(Y, cache, alpha)
 
         if graph is True:
-            plt.plot(np.arange(0, iterations + 1), cost)
-            plt.title("Training cost")
+            plt.plot(g_iteration, g_cost)
+            plt.title("Training Cost")
             plt.xlabel("iteration")
             plt.ylabel("cost")
             plt.show()
