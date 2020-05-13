@@ -152,12 +152,7 @@ class DeepNeuralNetwork:
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-        if verbose is True and iterations % step == 0:
-            if type(step) is not int:
-                raise TypeError("step must be an integer")
-            if step <= 0 or step > iterations:
-                raise ValueError("step must be positive and <= iterations")
-        if graph is True:
+        if verbose is True or graph is True:
             if type(step) is not int:
                 raise TypeError("step must be an integer")
             if step <= 0 or step > iterations:
@@ -210,12 +205,10 @@ class DeepNeuralNetwork:
         :param filename: is the file to which the object should be saved
         :return: none
         """
-        file = filename
-        if ".pkl" not in filename:
-            file = filename + ".pkl"
-        fileObject = open(file, 'wb')
-        pickle.dump(self, fileObject)
-        fileObject.close()
+        if filename[-4:] != ".pkl":
+            filename += ".pkl"
+        with open(filename, "wb") as fd:
+            pickle.dump(self, fd)
 
     @staticmethod
     def load(filename):
@@ -224,8 +217,7 @@ class DeepNeuralNetwork:
         :return: the loaded object, or None if filename doesn’t exist
         """
         try:
-            with open(filename, 'rb') as fd:
-                loaded = pickle.load(fd)
-            return loaded
+            with open(filename, "rb") as fd:
+                return pickle.load(fd)
         except FileNotFoundError:
             return None
