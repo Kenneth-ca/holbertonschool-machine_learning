@@ -13,4 +13,4 @@ def create_placeholders(nx, classes):
     :return: placeholders named x and y, respectively
     """
     return tf.placeholder(float, shape=[None, nx], name='x'), tf.placeholder(
-        float, shape=[None,classes], name='y')
+        float, shape=[None, classes], name='y')
