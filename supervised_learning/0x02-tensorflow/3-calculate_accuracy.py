@@ -3,7 +3,6 @@
 Module to calculate accuracy of prediction
 """
 import tensorflow as tf
-create_layer = __import__('1-create_layer').create_layer
 
 
 def calculate_accuracy(y, y_pred):
@@ -14,5 +13,5 @@ def calculate_accuracy(y, y_pred):
     :return: a tensor containing the decimal accuracy of the prediction
     """
     accuracy = tf.equal(tf.argmax(y, 1), tf.argmx(y_pred, 1))
-    mean = tf.reduce_mean(tf.cast(where, tf.float32))
+    mean = tf.reduce_mean(tf.cast(accuracy, tf.float32))
     return mean
