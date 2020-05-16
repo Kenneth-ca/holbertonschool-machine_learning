@@ -38,7 +38,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection("accuracy", accuracy)
 
-    train = create_train_op(loss, alpha)
+    training = create_train_op(loss, alpha)
     tf.add_to_collection("train", train)
 
     init = tf.global_variables_initializer()
@@ -47,14 +47,14 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     with tf.Session() as sess:
         sess.run(init)
         for i in range(iterations + 1):
+            # cost and accuracy for training and validation sets
+            cost_train = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+            accuracy_train = sess.run(accuracy,
+                                      feed_dict={x: X_train, y: Y_train})
+            cost_val = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            accuracy_val = sess.run(accuracy,
+                                    feed_dict={x: X_valid, y: Y_valid})
             if i % 100 == 0 or i == iterations:
-                # cost and accuracy for training and validation sets
-                cost_train = sess.run(loss, feed_dict={x: X_train, y: Y_train})
-                accuracy_train = sess.run(accuracy,
-                                          feed_dict={x: X_train, y: Y_train})
-                cost_val = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
-                accuracy_val = sess.run(accuracy,
-                                        feed_dict={x: X_valid, y: Y_valid})
                 print("After {} iterations:".format(i))
                 print("\tTraining Cost: {}".format(cost_train))
                 print("\tTraining Accuracy: {}".format(accuracy_train))
@@ -62,5 +62,5 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                 print("\tValidation Accuracy: {}".format(accuracy_val))
             # training for each iteration
             if i < iterations:
-                sess.run(train, feed_dict={x: X_train, y: Y_train})
+                sess.run(training, feed_dict={x: X_train, y: Y_train})
     return saver.save(sess, save_path)
