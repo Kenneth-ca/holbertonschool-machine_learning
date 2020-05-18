@@ -17,7 +17,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     :param X_train: a numpy.ndarray containing the training input data
     :param Y_train: a numpy.ndarray containing the training labels
     :param X_valid: a numpy.ndarray containing the training input data
-    :param Y_valied: a numpy.ndarray containing the training labels
+    :param Y_valid: a numpy.ndarray containing the training labels
     :param layer_sizes: list containing the number of nodes in each layer
     :param activations: list containing the activation functions of each layer
     :param alpha: the learning rate
@@ -63,4 +63,4 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
             # training for each iteration
             if i < iterations:
                 sess.run(training, feed_dict={x: X_train, y: Y_train})
-    return saver.save(sess, save_path)
+        return saver.save(sess, save_path)
