@@ -158,7 +158,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
     labels, respectively
     :param Data_valid: tuple containing the validation inputs and validation
     labels, respectively
-    :param layers: a list containing the number of nodes in each layer of the networ
+    :param layers: a list containing the number of nodes in each layer
     :param activations: a list containing the activation functions used for
     each layer of the network
     :param alpha: the learning rate
@@ -247,5 +247,8 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
                         print("\tStep {}:".format(b + 1))
                         print("\t\tCost: {}".format(loss_mini_batch))
                         print("\t\tAccuracy: {}".format(acc_mini_batch))
+
+            # Update of global step variable for each iteration
+            sess.run(tf.assign(global_step, global_step + 1))
 
         return saver.save(sess, save_path)
