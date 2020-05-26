@@ -20,7 +20,6 @@ def dropout_forward_prop(X, weights, L, keep_prob):
     dropout mask used on each layer (see example for format)
     """
     cache = {'A0': X}
-    dropout = {'A0': X}
     # Hidden and output layer
     for i in range(L):
         # create keys to access weights(W), biases(b) and store in cache
@@ -41,11 +40,10 @@ def dropout_forward_prop(X, weights, L, keep_prob):
                 np.exp(output_Z) + np.exp(-output_Z)))
             # dropout value is 0 if random number less than keep_prop
             rand = np.random.rand(output_A.shape[0], output_A.shape[1])
-            d = (rand < keep_prob).astype(int)
+            dropout = (rand < keep_prob).astype(int)
             # dropout of the neuron if multiply by 0
-            output_A = np.multiply(output_A, d)
+            output_A = np.multiply(output_A, dropout)
             output_A = output_A / keep_prob
-            dropout['D{}'.format(i + 1)] = d
+            cache['D{}'.format(i + 1)] = dropout
         cache[key_cache] = output_A
-        dropout[key_cache] = output_A
-    return dropout
+    return cache
