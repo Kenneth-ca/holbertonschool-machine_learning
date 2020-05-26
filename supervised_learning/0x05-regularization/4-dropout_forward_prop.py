@@ -7,7 +7,7 @@ import numpy as np
 
 def dropout_forward_prop(X, weights, L, keep_prob):
     """
-    a function that cnducts forward porpagation using dropout
+    a function that conducts forward propagation using dropout
     :param X: a numpy.ndarray of shape (nx, m) containing the input data for
     the network
         nx is the number of input features
