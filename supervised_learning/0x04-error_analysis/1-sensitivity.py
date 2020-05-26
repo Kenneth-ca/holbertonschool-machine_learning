@@ -14,7 +14,7 @@ def sensitivity(confusion):
     :return: a numpy.ndarray of shape (classes,) containing the sensitivity
     of each class
     """
-    # Sensitivity = True Positive(TP) / Positive(P); P = TP + False Negative(FN)
+    # Sensitivity = True Positive(TP) / Positive(P); P = TP+False Negative(FN)
     TP = np.diagonal(confusion)
     P = np.sum(confusion, axis=1)
     return TP / P
