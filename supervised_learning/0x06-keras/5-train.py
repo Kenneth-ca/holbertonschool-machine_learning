@@ -17,6 +17,7 @@ def train_model(network, data, labels, batch_size, epochs,
     descent
     :param epochs: the number of passes through data for mini-batch gradient
     descent
+    :param validation_data: data to validate the model with
     :param verbose: a boolean that determines if output should be printed
     during training
     :param shuffle: a boolean that determines whether to shuffle the batches
