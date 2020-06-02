@@ -18,20 +18,20 @@ def train_model(network, data, labels, batch_size, epochs,
     descent
     :param epochs: the number of passes through data for mini-batch gradient
     descent
+    :param validation_data: data to validate the model with
+    :param early_stopping: indicates whether early stopping should be used
+    :param patience: the patience used for early stopping
     :param verbose: a boolean that determines if output should be printed
     during training
     :param shuffle: a boolean that determines whether to shuffle the batches
     every epoch. Normally, it is a good idea to shuffle, but for
     reproducibility, we have chosen to set the default to False
-    :param patience: the patience used for early stopping
     :return: the History object generated after training the model
     """
-    if early_stopping is True and validation_data is not None:
-        stopping = K.callbacks.EarlyStopping(patience=patience)
-    else:
-        stopping = None
-    history = network.fit(data, labels, batch_size=batch_size, epochs=epochs,
-                          verbose=verbose, shuffle=shuffle,
-                          validation_data=validation_data, callbacks=[stopping])
-    return history
+    callbacks = []
+    if early_stopping and validation_data:
+        callbacks.append(K.callbacks.EarlyStopping(patience=patience))
 
+    return network.fit(data, labels, batch_size=batch_size, epochs=epochs,
+                       verbose=verbose, shuffle=shuffle,
+                       validation_data=validation_data, callbacks=callbacks)
