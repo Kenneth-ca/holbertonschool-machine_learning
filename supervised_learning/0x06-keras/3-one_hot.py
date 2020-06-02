@@ -13,4 +13,3 @@ def one_hot(labels, classes=None):
     :return: the one-hot matrix
     """
     return K.utils.to_categorical(labels, classes)
-
