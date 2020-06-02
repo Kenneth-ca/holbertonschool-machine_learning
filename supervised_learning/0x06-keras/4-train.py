@@ -25,6 +25,5 @@ def train_model(network, data, labels, batch_size, epochs, verbose=True,
     :return: the History object generated after training the model
     """
     history = network.fit(data, labels, batch_size=batch_size, epochs=epochs,
-                        verbose=verbose, shuffle=shuffle)
+                          verbose=verbose, shuffle=shuffle)
     return history
-
