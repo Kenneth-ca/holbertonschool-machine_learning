@@ -19,12 +19,19 @@ def train_model(network, data, labels, batch_size, epochs,
     descent
     :param epochs: the number of passes through data for mini-batch gradient
     descent
+    :param validation_data: data to validate the model with
+    :param early_stopping: indicates whether early stopping should be used
+    :param patience: the patience used for early stopping
+    :param learning_rate_decay: indicates if the decay is going to be performed
+    :param alpha: the initial learning rate
+    :param decay_rate: the decay rate
+    :param save_best: indicates if the model will be saved when it is the best
+    :param filepath: the file path where the model should be saved
     :param verbose: a boolean that determines if output should be printed
     during training
     :param shuffle: a boolean that determines whether to shuffle the batches
     every epoch. Normally, it is a good idea to shuffle, but for
     reproducibility, we have chosen to set the default to False
-    :param patience: the patience used for early stopping
     :return: the History object generated after training the model
     """
 
