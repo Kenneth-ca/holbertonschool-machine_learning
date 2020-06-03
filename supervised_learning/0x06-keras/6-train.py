@@ -33,6 +33,6 @@ def train_model(network, data, labels, batch_size, epochs,
         callbacks.append(K.callbacks.EarlyStopping(patience=patience))
 
     history = network.fit(data, labels, batch_size=batch_size, epochs=epochs,
-                       verbose=verbose, shuffle=shuffle,
-                       validation_data=validation_data, callbacks=callbacks)
+                          verbose=verbose, shuffle=shuffle,
+                          validation_data=validation_data, callbacks=callbacks)
     return history
