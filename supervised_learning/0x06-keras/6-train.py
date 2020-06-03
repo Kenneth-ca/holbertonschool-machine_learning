@@ -28,11 +28,10 @@ def train_model(network, data, labels, batch_size, epochs,
     reproducibility, we have chosen to set the default to False
     :return: the History object generated after training the model
     """
-    callbacks = []
+    callback = []
     if early_stopping and validation_data:
-        callbacks.append(K.callbacks.EarlyStopping(patience=patience))
-
-    history = network.fit(data, labels, batch_size=batch_size, epochs=epochs,
-                          verbose=verbose, shuffle=shuffle,
-                          validation_data=validation_data, callbacks=callbacks)
+        callback.append(K.callbacks.EarlyStopping(patience=patience))
+    history = network.fit(data, labels, epochs=epochs, batch_size=batch_size,
+                          shuffle=shuffle, verbose=verbose, callbacks=callback,
+                          validation_data=validation_data)
     return history
