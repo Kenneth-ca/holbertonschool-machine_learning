@@ -12,4 +12,5 @@ def one_hot(labels, classes=None):
     :param classes: classes for the one-hot matrix
     :return: the one-hot matrix
     """
-    return K.utils.to_categorical(labels, classes)
+    oh_encode = K.utils.to_categorical(labels, num_classes=classes)
+    return oh_encode
