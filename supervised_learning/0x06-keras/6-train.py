@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Updates the funtion train model to analyze validation data
+Updates the function train model with early stop
 """
 import tensorflow.keras as K
 
@@ -32,6 +32,7 @@ def train_model(network, data, labels, batch_size, epochs,
     if early_stopping and validation_data:
         callbacks.append(K.callbacks.EarlyStopping(patience=patience))
 
-    return network.fit(data, labels, batch_size=batch_size, epochs=epochs,
+    history = network.fit(data, labels, batch_size=batch_size, epochs=epochs,
                        verbose=verbose, shuffle=shuffle,
                        validation_data=validation_data, callbacks=callbacks)
+    return history
