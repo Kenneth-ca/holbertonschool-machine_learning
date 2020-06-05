@@ -25,24 +25,18 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         sw is the stride for the width of the image
     :return: numpy.ndarray containing the convolved images
     """
-    c_images = images.shape[0]
+    c_images, images_h, images_w = images.shape
     f_height = kernel.shape[0]
     f_width = kernel.shape[1]
+    stride_h, stride_w = stride
 
     if padding == "same":
-        if f_height % 2 != 0:
-            padding_h = (f_height - 1) // 2
-        else:
-            padding_h = f_height // 2
-        if f_width % 2 != 0:
-            padding_w = (f_width - 1) // 2
-        else:
-            padding_w = f_width // 2
+        padding_h = ((images_h - 1) * stride_h + f_height - images_h) // 2 + 1
+        padding_w = ((images_w - 1) * stride_w + f_width - images_w) // 2 + 1
     elif padding == "valid":
         padding_h, padding_w = (0, 0)
     else:
         padding_h, padding_w = padding
-    stride_h, stride_w = stride
 
     c_height = (images.shape[1] + 2 * padding_h - f_height) // stride_h + 1
     c_width = (images.shape[2] + 2 * padding_w - f_width) // stride_w + 1
