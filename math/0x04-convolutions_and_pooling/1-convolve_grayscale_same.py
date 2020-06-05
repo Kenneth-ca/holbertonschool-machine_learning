@@ -19,13 +19,22 @@ def convolve_grayscale_same(images, kernel):
         kw is the width of the kernel
     :return: numpy.ndarray containing the convolved images
     """
-    padding_h = (kernel.shape[0] - 1) // 2
-    padding_w = (kernel.shape[1] - 1) // 2
     c_images = images.shape[0]
     f_height = kernel.shape[0]
     f_width = kernel.shape[1]
-    c_height = images.shape[1] + 2 * padding_h - f_height + 1
-    c_width = images.shape[2] + 2 * padding_w - f_width + 1
+
+    # padding if filter dimensions are odd or even
+    if f_height % 2 != 0:
+        padding_h = (f_height - 1) // 2
+    else:
+        padding_h = f_height // 2
+    if f_width % 2 != 0:
+        padding_w = (f_width - 1) // 2
+    else:
+        padding_w = f_width // 2
+
+    c_height = images.shape[1]
+    c_width = images.shape[2]
     # np.pad works with a before_N and after_N parameter defined in a tuple
     # that will add the selected pad at each dimension
     pad_images = np.pad(images, ((0, 0), (padding_h, padding_h), (padding_w,
