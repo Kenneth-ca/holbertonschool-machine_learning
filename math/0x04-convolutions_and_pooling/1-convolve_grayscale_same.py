@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Performs a same convolution on grayscale images
 """
