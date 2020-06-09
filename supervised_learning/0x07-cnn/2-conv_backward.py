@@ -31,8 +31,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     pad_h, pad_w = (0, 0)
     if padding == "same":
-        pad_h = ((h_prev - 1) * sh + kw - h_prev) // 2 + 1
-        pad_w = ((w_prev - 1) * sh + kw - w_prev) // 2 + 1
+        pad_h = ((h_prev - 1) * sh + kh - h_prev) // 2 + 1
+        pad_w = ((w_prev - 1) * sw + kw - w_prev) // 2 + 1
 
     dA = np.zeros(A_prev.shape)
     dW = np.zeros(W.shape)
@@ -41,7 +41,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     A_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w), (0, 0)),
                    mode="constant", constant_values=(0, 0))
 
-    dA_pad = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w), (0, 0)),
+    dA_pad = np.pad(dA, ((0, 0), (pad_h, pad_h), (pad_w, pad_w), (0, 0)),
                     mode="constant", constant_values=(0, 0))
 
     # In this notation row refers to height and col to width
