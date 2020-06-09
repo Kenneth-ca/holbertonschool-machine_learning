@@ -29,7 +29,7 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode='max'):
     # In this notation row refers to height and col to width
     for row in range(pool_h):
         for col in range(pool_w):
-            slice_A = A_prev[:, row * sh:row * sh + kh, col * sh:col * sw + kh]
+            slice_A = A_prev[:, row * sh:row * sh + kh, col * sw:col * sw + kh]
             if mode == "max":
                 pooled[:, row, col] = np.max(slice_A, axis=(1, 2))
             if mode == "avg":
