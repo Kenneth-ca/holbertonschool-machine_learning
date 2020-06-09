@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Performs forward propagation over a convolutional layer of a neural network
+Performs backward propagation over a convolutional layer of a neural network
 """
 import numpy as np
 
 
 def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     """
-    a function that performs forward propagation over a CNN
+    a function that performs backward propagation over a CNN
     :param dZ: is a numpy.ndarray of shape (m, h_new, w_new, c_new) containing
     the partial derivatives with respect to the unactivated output of the
     convolutional layer
