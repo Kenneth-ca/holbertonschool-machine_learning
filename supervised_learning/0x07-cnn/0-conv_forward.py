@@ -42,7 +42,7 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         for col in range(conv_w):
             for ch in range(c_new):
                 slice_A = padded[:, row * sh:row * sh + kh, col * sw:col * sw
-                                 + kh]
+                                 + kw]
                 slice_A_sum = np.sum(slice_A * W[:, :, :, ch], axis=(1, 2, 3))
                 convolved[:, row, col, ch] = slice_A_sum
     return activation(convolved + b)
