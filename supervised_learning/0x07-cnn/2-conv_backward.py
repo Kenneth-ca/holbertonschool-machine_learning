@@ -61,7 +61,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     aux = W[:, :, :, ch] * dZ[img, row, col, ch]
                     dA_img[row_start:row_end, col_start:col_end] += aux
                     dW[:, :, :, ch] += slice_A * dZ[img, row, col, ch]
-                    db[:, :, :, ch] += dZ[img, row, col, ch]
         if padding == "same":
             dA[img, :, :, :] += dA_img[pad_h: -pad_h, pad_w: - pad_w]
         if padding == "valid":
