@@ -51,7 +51,8 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                     if mode == "max":
                         mask = (slice_A == np.max(slice_A)).astype(int)
                     if mode == "avg":
-                        mask = np.ones(slice_A.shape)
+                        average = dA[img, row, col, ch] / (kh * kw)
+                        mask = np.ones(slice_A.shape) * average
                     aux = dA[img, row, col, ch] * mask
                     dA_prev[img, row_start:row_end, col_start:col_end,
                             ch] += aux
