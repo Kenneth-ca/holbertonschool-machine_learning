@@ -27,8 +27,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
 
     pad_h, pad_w = (0, 0)
     if padding == "same":
-        pad_h = ((h_prev - 1) * sh + kw - h_prev) // 2 + 1
-        pad_w = ((w_prev - 1) * sh + kw - w_prev) // 2 + 1
+        pad_h = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
+        pad_w = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
 
     padded = np.pad(A_prev, ((0, 0), (pad_h, pad_h), (pad_w, pad_w), (0, 0)),
                     mode="constant", constant_values=(0, 0))
