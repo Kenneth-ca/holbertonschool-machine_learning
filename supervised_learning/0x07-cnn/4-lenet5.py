@@ -29,7 +29,7 @@ def lenet5(x, y):
     pool1 = tf.layers.MaxPooling2D(pool_size=[2, 2], strides=(2, 2))(conv1)
 
     # 2nd convolutional layer
-    conv2 = tf.layers.Conv2D(filters=6, kernel_size=(5, 5), padding="valid",
+    conv2 = tf.layers.Conv2D(filters=16, kernel_size=(5, 5), padding="valid",
                              activation=activation, kernel_initializer=init)(
         pool1)
     pool2 = tf.layers.MaxPooling2D(pool_size=[2, 2], strides=(2, 2))(conv2)
@@ -53,11 +53,11 @@ def lenet5(x, y):
     # Loss
     loss = tf.losses.softmax_cross_entropy(y, fc3)
 
-    # Train
-    train = tf.train.AdamOptimizer().minimize(loss)
-
     # Accuracy
     accuracy = tf.equal(tf.argmax(y, 1), tf.argmax(fc3, 1))
     mean = tf.reduce_mean(tf.cast(accuracy, tf.float32))
+
+    # Train
+    train = tf.train.AdamOptimizer().minimize(loss)
 
     return y_pred, train, loss, mean
