@@ -16,29 +16,28 @@ def identity_block(A_prev, filters):
     :return: the concatenated output of the identity block
     """
     init = K.initializers.he_normal()
-    F1, F3R, F3, F5R, F5, FPP = filters
+    F11, F3, F12 = filters
 
-    c_F1 = K.layers.Conv2D(F1, kernel_size=1, padding="same",
-                           activation="relu", kernel_initializer=init)(A_prev)
+    # First layer
+    c_F11 = K.layers.Conv2D(F11, kernel_size=1, padding="same",
+                            kernel_initializer=init)(A_prev)
+    norm_F11 = K.layers.BatchNormalization()(c_F11)
+    act_F11 = K.layers.Activation("relu")(norm_F11)
 
-    c_F3R = K.layers.Conv2D(F3R, kernel_size=1, padding="same",
-                            activation="relu", kernel_initializer=init)(A_prev)
-
+    # Second layer
     c_F3 = K.layers.Conv2D(F3, kernel_size=3, padding="same",
-                           activation="relu", kernel_initializer=init)(c_F3R)
+                           kernel_initializer=init)(act_F11)
+    norm_F3 = K.layers.BatchNormalization()(c_F3)
+    act_F3 = K.layers.Activation("relu")(norm_F3)
 
-    c_F5R = K.layers.Conv2D(F5R, kernel_size=1, padding="same",
-                            activation="relu", kernel_initializer=init)(A_prev)
+    # Third layer
+    c_F12 = K.layers.Conv2D(F12, kernel_size=1, padding="same",
+                            kernel_initializer=init)(act_F3)
+    norm_F12 = K.layers.BatchNormalization()(c_F12)
 
-    c_F5 = K.layers.Conv2D(F5, kernel_size=5, padding="same",
-                           activation="relu", kernel_initializer=init)(c_F5R)
+    # Add shortcut
+    X = K.layers.Add()([norm_F12, A_prev])
 
-    pool = K.layers.MaxPooling2D(pool_size=(3, 3), strides=(1, 1),
-                                 padding="same")(A_prev)
+    act = K.layers.Activation("relu")(X)
 
-    c_FPP = K.layers.Conv2D(FPP, kernel_size=1, padding="same",
-                            activation="relu", kernel_initializer=init)(pool)
-
-    concat = K.layers.concatenate([c_F1, c_F3, c_F5, c_FPP])
-
-    return concat
+    return act
