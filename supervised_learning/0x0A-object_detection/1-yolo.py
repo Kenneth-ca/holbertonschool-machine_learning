@@ -60,6 +60,7 @@ class Yolo:
             t_y = out[:, :, :, 1]
             t_w = out[:, :, :, 2]
             t_h = out[:, :, :, 3]
+
             # Width and height of the predefined anchor
             pw_total = self.anchors[:, :, 0]
             pw = np.tile(pw_total[index], grid_width)
@@ -67,11 +68,14 @@ class Yolo:
             ph_total = self.anchors[:, :, 1]
             ph = np.tile(ph_total[index], grid_height)
             ph = ph.reshape(grid_height, 1, len(ph_total[index]))
+
             # Corners of the grid
             cx = np.tile(np.arange(grid_width), grid_height)
             cx = cx.reshape(grid_width, grid_width, 1)
-            cy = np.tile(np.arange(grid_width), grid_height).T
+            cy = np.tile(np.arange(grid_width), grid_height)
+            cy = cy.reshape(grid_height, grid_height).T
             cy = cy.reshape(grid_height, grid_height, 1)
+
             # Boxes predictions
             bx = (1 / (1 + np.exp(-t_x))) + cx
             by = (1 / (1 + np.exp(-t_y))) + cy
