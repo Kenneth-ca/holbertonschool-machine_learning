@@ -50,7 +50,6 @@ class Yolo:
         boxes = []
         box_confidence = []
         box_class_probs = []
-        print(outputs[0][0][0])
         for index, out in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = out.shape
             # Boxes inside
