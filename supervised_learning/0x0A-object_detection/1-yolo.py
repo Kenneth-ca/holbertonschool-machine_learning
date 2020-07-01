@@ -50,6 +50,7 @@ class Yolo:
         boxes = []
         box_confidence = []
         box_class_probs = []
+        img_h, img_w = image_size
         for index, out in enumerate(outputs):
             grid_height, grid_width, anchor_boxes, _ = out.shape
             # Boxes inside
@@ -101,6 +102,7 @@ class Yolo:
             # Box confidence
             aux = out[:, :, :, 4]
             conf = (1 / (1 + np.exp(-aux)))
+            conf = conf.reshape(grid_height, grid_width, anchor_boxes, 1)
             box_confidence.append(conf)
 
             # Box class probabilities
