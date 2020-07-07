@@ -51,7 +51,7 @@ def load_images(images_path, as_array=True):
         filenames.append(name)
 
     if as_array is True:
-        filenames = np.array(filenames)
+        pics = np.array(pics)
 
     return (pics, filenames)
 
@@ -71,11 +71,11 @@ def load_csv(csv_path, params={}):
 
 def save_images(path, images, filenames):
     """
-
-    :param path:
-    :param images:
-    :param filenames:
-    :return:
+    saves images to a specific path
+    :param path: the path to the directory in which the images should be saved
+    :param images: a list/numpy.ndarray of images to save
+    :param filenames: a list of filenames of the images to save
+    :return: True on success and False on failure
     """
     if os.path.exists(path):
         for i in range(len(images)):
@@ -84,3 +84,51 @@ def save_images(path, images, filenames):
         return True
     else:
         return False
+
+
+def generate_triplets(images, filenames, triplet_names):
+    """
+    generates triplets
+    :param images: numpy.ndarray of shape (n, h, w, 3) containing the various
+    images in the dataset
+    :param filenames: a list of length n containing the corresponding
+    filenames for images
+    :param triplet_names: a list of lists where each sublist contains the
+    filenames of an anchor, positive, and negative image, respectively
+    :return: a list [A, P, N]
+        A is a numpy.ndarray of shape (m, h, w, 3) containing the anchor images
+        for all m triplets
+        P is a numpy.ndarray of shape (m, h, w, 3) containing the positive
+        images for all m triplets
+        N is a numpy.ndarray of shape (m, h, w, 3) containing the negative
+        images for all m triplets
+    """
+    n, h, w, c = images.shape
+    A = []
+    P = []
+    N = []
+    for i in range(len(triplet_names)):
+        anchor, positive, negative = triplet_names[i]
+        anchor = anchor + ".jpg"
+        positive = positive + ".jpg"
+        negative = negative + ".jpg"
+
+        if anchor in filenames:
+            if positive in filenames:
+                if negative in filenames:
+                    idx_a = filenames.index(anchor)
+                    idx_p = filenames.index(positive)
+                    idx_n = filenames.index(negative)
+
+                    A.append(images[idx_a])
+                    P.append(images[idx_p])
+                    N.append(images[idx_n])
+    A = [ele.reshape(1, w, h, c) for ele in A]
+    P = [ele.reshape(1, w, h, c) for ele in P]
+    N = [ele.reshape(1, w, h, c) for ele in N]
+
+    A = np.concatenate(A)
+    P = np.concatenate(P)
+    N = np.concatenate(N)
+    triplets = [A, P, N]
+    return triplets
