@@ -91,20 +91,15 @@ class FaceAlign:
         try:
             detect = self.detect(image)
             landmark = self.find_landmarks(image, detect)
-            print(landmark)
-            print(landmark_indices)
 
             srcTri = landmark[landmark_indices]
-            print(srcTri)
             srcTri = srcTri.astype(np.float32)
             # destination
             anchor = anchor_points * size
 
             warp_mat = cv2.getAffineTransform(srcTri, anchor)
-            print(warp_mat)
 
-            warp_dst = cv2.warpAffine(image, warp_mat,
-                                      (image.shape[1], image.shape[0]))
+            warp_dst = cv2.warpAffine(image, warp_mat, (size, size))
 
             return warp_dst
         except RuntimeError:
