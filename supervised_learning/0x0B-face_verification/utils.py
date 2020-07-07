@@ -6,6 +6,7 @@ import numpy as np
 import glob
 import cv2
 import csv
+import os
 
 
 def load_images(images_path, as_array=True):
@@ -33,21 +34,27 @@ def load_images(images_path, as_array=True):
     filenames = []
 
     for image in paths:
+        # IMAGES
+        # For Linux
         pic = cv2.imread(image)
         # For Windows - special characters (no need for Linux)
-        #pic = cv2.imdecode(np.fromfile(image, np.uint8),
-        #                   cv2.IMREAD_UNCHANGED)
+        pic = cv2.imdecode(np.fromfile(image, np.uint8),
+                           cv2.IMREAD_UNCHANGED)
         pic = cv2.cvtColor(pic, cv2.COLOR_BGR2RGB)
         pics.append(pic)
+
+        # FILENAMES
         # For Linux
-        filenames.append(image.split('/')[-1])
+        name = image.split('/')[-1]
         # For Windows - directories separator
-        # filenames.append(image.split('\\')[-1])
+        name = name.split('\\')[-1]
+        filenames.append(name)
 
     if as_array is True:
         filenames = np.array(filenames)
 
     return (pics, filenames)
+
 
 def load_csv(csv_path, params={}):
     """
@@ -60,3 +67,20 @@ def load_csv(csv_path, params={}):
         csv_reader = csv.reader(csv_file, params)
         list_csv = [row for row in csv_reader]
     return list_csv
+
+
+def save_images(path, images, filenames):
+    """
+
+    :param path:
+    :param images:
+    :param filenames:
+    :return:
+    """
+    if os.path.exists(path):
+        for i in range(len(images)):
+            colored = cv2.cvtColor(images[i], cv2.COLOR_BGR2RGB)
+            cv2.imwrite(os.path.join(path, filenames[i]), colored)
+        return True
+    else:
+        return False
