@@ -22,11 +22,46 @@ class TrainModel:
         with tf.keras.utils.CustomObjectScope({'tf': tf}):
             self.base_model = K.models.load_model(model_path)
 
-        """loss = TripletLoss(alpha)
+        A = K.Input(shape=(96, 96, 3))
+        P = K.Input(shape=(96, 96, 3))
+        N = K.Input(shape=(96, 96, 3))
 
-        A_input = tf.placeholder(tf.float32, (None, 96, 96, 3))
-        P_input = tf.placeholder(tf.float32, (None, 96, 96, 3))
-        N_input = tf.placeholder(tf.float32, (None, 96, 96, 3))
-        inputs = [A_inputs, P_inputs, N_inputs]
+        inputs = [A, P, N]
 
-        outputs = self.base_model(inputs)"""
+        output_A = self.base_model(A)
+        output_P = self.base_model(P)
+        output_N = self.base_model(N)
+
+        output0 = [output_A, output_P, output_N]
+        loss = TripletLoss(alpha)
+        outputs = loss(output0)
+
+        model = K.models.Model(inputs, outputs)
+        model.compile(optimizer="Adam")
+
+        self.training_model = model
+
+    def train(self, triplets, epochs=5, batch_size=32, validation_split=0.3,
+              verbose=True):
+        """
+
+        :param triplets:
+        :param epochs:
+        :param batch_size:
+        :param validation_split:
+        :param verbose:
+        :return:
+        """
+        history = self.training_model.fit(triplets,
+                                          batch_size=batch_size,
+                                          epochs=epochs,
+                                          verbose=verbose,
+                                          validation_split=validation_split)
+        return history
+
+    def save(self, save_path):
+        """
+
+        :param save_path:
+        :return:
+        """
