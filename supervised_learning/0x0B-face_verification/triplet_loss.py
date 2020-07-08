@@ -49,3 +49,14 @@ class TripletLoss(Layer):
         loss = K.backend.maximum(loss, 0)
 
         return loss
+
+    def call(self, inputs):
+        """
+        calls the triplet loss and add the loss to the graph
+        :param inputs: a list containing the anchor, positive, and negative
+        output tensors from the last layer of the model, respectively
+        :return: the triplet loss tensor
+        """
+        loss = self.triplet_loss(inputs)
+        self.add_loss(loss)
+        return loss
