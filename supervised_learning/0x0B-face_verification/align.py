@@ -63,7 +63,6 @@ class FaceAlign:
             predictor = self.shape_predictor(gray, detection)
             num_landmarks = predictor.num_parts
 
-
             np_landmarks = np.zeros((num_landmarks, 2), dtype="int")
             for i in range(0, num_landmarks):
                 np_landmarks[i, 0] = predictor.part(i).x

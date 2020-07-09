@@ -118,7 +118,6 @@ class TrainModel:
         :param thresholds:
         :return:
         """
-
         def distance(emb1, emb2):
             return np.sum(np.square(emb1 - emb2))
 
@@ -148,7 +147,9 @@ class TrainModel:
                       thresholds]
 
         opt_idx = np.argmax(f1_scores)
-        # Threshold at maximal F1 score
-        opt_tau = thresholds[opt_idx]
 
-        return opt_tau, f1_scores, acc_scores
+        opt_tau = thresholds[opt_idx]
+        opt_f1 = f1_scores[opt_idx]
+        opt_acc = acc_scores[opt_idx]
+
+        return opt_tau, opt_f1, opt_acc

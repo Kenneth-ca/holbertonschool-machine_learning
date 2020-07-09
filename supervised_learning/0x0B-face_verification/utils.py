@@ -18,8 +18,8 @@ def load_images(images_path, as_array=True):
     If True, the images should be loaded as a numpy.ndarray of
     shape (m, h, w, c) where:
         m is the number of images
-        h, w, and c are the height, width, and number of channels of all images,
-         respectively
+        h, w, and c are the height, width, and number of channels of all
+        images, respectively
         If False, the images should be loaded as a list of individual
         numpy.ndarrays
     :return: images, filenames
