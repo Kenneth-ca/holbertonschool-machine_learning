@@ -1,8 +1,9 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Trains a convolutional neural network to classify the CIFAR 10 dataset:
 """
 import tensorflow.keras as K
+import tensorflow as tf
 
 
 def preprocess_data(X, Y):
@@ -23,35 +24,43 @@ def preprocess_data(X, Y):
 
 
 if __name__ == "__main__":
-    (x_train, y_train), _ = K.datasets.cifar10.load_data()
+    (x_train, y_train), (x_test, y_test) = K.datasets.cifar10.load_data()
     print((x_train.shape, y_train.shape))
     x_train, y_train = preprocess_data(x_train, y_train)
+    x_test, y_test = preprocess_data(x_test, y_test)
     print((x_train.shape, y_train.shape))
 
-    input_tensor = K.Input(shape=(32, 32, 3))
-    x = K.layers.UpSampling2D((2, 2))(input_tensor)
-    x = K.layers.UpSampling2D((2, 2))(x)
-    x = K.layers.UpSampling2D((2, 2))(x)
-    model = K.applications.ResNet50(include_top=False,
-                                    weights="imagenet",
-                                    input_tensor=x)
+    input_t = K.Input(shape=(32, 32, 3))
+    res_model = K.applications.ResNet50(include_top=False,
+                                        weights="imagenet",
+                                        input_tensor=input_t)
 
-    last_layer = model.layers[-1].output
+    for layer in res_model.layers[:143]:
+        layer.trainable = False
+    # Check the freezed was done ok
+    for i, layer in enumerate(res_model.layers):
+        print(i, layer.name, "-", layer.trainable)
 
-    FC = K.layers.Flatten()(last_layer)
-    FC = K.layers.BatchNormalization()(FC)
-    FC = K.layers.Dense(128, activation='relu')(FC)
-    FC = K.layers.Dropout(0.5)(FC)
-    FC = K.layers.BatchNormalization()(FC)
-    FC = K.layers.Dense(64, activation='relu')(FC)
-    FC = K.layers.Dropout(0.5)(FC)
-    FC = K.layers.BatchNormalization()(FC)
-    FC = K.layers.Dense(units=10, activation="softmax")(FC)
+    to_res = (224, 224)
 
-    model = K.models.Model(inputs=model.input, outputs=FC)
+    model = K.models.Sequential()
+    model.add(K.layers.Lambda(lambda image: tf.image.resize(image, to_res)))
+    model.add(res_model)
+    model.add(K.layers.Flatten())
+    model.add(K.layers.BatchNormalization())
+    model.add(K.layers.Dense(256, activation='relu'))
+    model.add(K.layers.Dropout(0.5))
+    model.add(K.layers.BatchNormalization())
+    model.add(K.layers.Dense(128, activation='relu'))
+    model.add(K.layers.Dropout(0.5))
+    model.add(K.layers.BatchNormalization())
+    model.add(K.layers.Dense(64, activation='relu'))
+    model.add(K.layers.Dropout(0.5))
+    model.add(K.layers.BatchNormalization())
+    model.add(K.layers.Dense(10, activation='softmax'))
 
     check_point = K.callbacks.ModelCheckpoint(filepath="cifar10.h5",
-                                              monitor="acc",
+                                              monitor="val_acc",
                                               mode="max",
                                               save_best_only=True,
                                               )
@@ -59,6 +68,8 @@ if __name__ == "__main__":
     model.compile(loss='categorical_crossentropy',
                   optimizer=K.optimizers.RMSprop(lr=2e-5),
                   metrics=['accuracy'])
-    history = model.fit(x_train, y_train, batch_size=32, epochs=5, verbose=1,
+    history = model.fit(x_train, y_train, batch_size=32, epochs=10, verbose=1,
+                        validation_data=(x_test, y_test),
                         callbacks=[check_point])
+    model.summary()
     model.save("cifar10.h5")
