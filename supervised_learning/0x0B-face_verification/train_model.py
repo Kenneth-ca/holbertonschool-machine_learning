@@ -45,13 +45,14 @@ class TrainModel:
     def train(self, triplets, epochs=5, batch_size=32, validation_split=0.3,
               verbose=True):
         """
-
-        :param triplets:
-        :param epochs:
-        :param batch_size:
-        :param validation_split:
-        :param verbose:
-        :return:
+        trains self.training_model
+        :param triplets: a list of numpy.ndarrayscontaining the inputs to
+        self.training_model
+        :param epochs: the number of epochs to train for
+        :param batch_size: is the batch size for training
+        :param validation_split: is the validation split for training
+        :param verbose: is a boolean that sets the verbosity mode
+        :return: the History output from the training
         """
         history = self.training_model.fit(triplets,
                                           batch_size=batch_size,
@@ -62,7 +63,7 @@ class TrainModel:
 
     def save(self, save_path):
         """
-
+        saves the base embedding model
         :param save_path:
         :return:
         """
@@ -72,10 +73,12 @@ class TrainModel:
     @staticmethod
     def f1_score(y_true, y_pred):
         """
-
-        :param y_true:
-        :param y_pred:
-        :return:
+        calculates the F1 score of predictions
+        :param y_true: numpy.ndarray of shape (m,) containing the correct labels
+            m is the number of examples
+        :param y_pred: numpy.ndarray of shape (m,) containing the predicted
+        labels
+        :return: The f1 score
         """
         TP = np.count_nonzero(y_pred * y_true)
         FP = np.count_nonzero(y_pred * (y_true - 1))
@@ -112,11 +115,19 @@ class TrainModel:
 
     def best_tau(self, images, identities, thresholds):
         """
-
-        :param images:
-        :param identities:
-        :param thresholds:
-        :return:
+        calculates the best tau to use for a maximal F1 score
+        :param images: numpy.ndarray of shape (m, n, n, 3) containing the
+        aligned images for testing
+            m is the number of images
+            n is the size of the images
+        :param identities: list containing the identities of each image in
+        images
+        :param thresholds: a 1D numpy.ndarray of distance thresholds (tau) to
+        test
+        :return: (tau, f1, acc)
+            tau- the optimal threshold to maximize F1 score
+            f1 - the maximal F1 score
+            acc - the accuracy associated with the maximal F1 score
         """
         def distance(emb1, emb2):
             return np.sum(np.square(emb1 - emb2))
