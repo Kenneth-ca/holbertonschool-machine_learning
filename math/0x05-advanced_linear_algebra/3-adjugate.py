@@ -91,7 +91,6 @@ def adjugate(matrix):
     :return: the adjugate of a matrix
     """
     adj = cofactor(matrix)
-    print(adj)
     transpose = []
     for j in range(len(adj[0])):
         inner = []
