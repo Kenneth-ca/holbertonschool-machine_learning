@@ -106,10 +106,10 @@ def inverse(matrix):
     :param matrix: a list of lists whose inverse should be calculated
     :return: the inverse of matrix, or None if matrix is singular
     """
-    adj = cofactor(matrix)
     deter = determinant(matrix)
     if deter == 0:
         return None
+    adj = adjugate(matrix)
     inv = []
     for i in range(len(matrix)):
         inner = []
