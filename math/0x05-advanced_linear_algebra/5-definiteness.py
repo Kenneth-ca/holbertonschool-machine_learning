@@ -20,6 +20,9 @@ def definiteness(matrix):
     row, col = matrix.shape
     if row != col:
         return None
+    # Matrix has to be symmetric to calculate definiteness
+    if not (matrix == matrix.T).all():
+        return None
     eigenvalues = np.linalg.eigvals(matrix)
 
     pos = 0
