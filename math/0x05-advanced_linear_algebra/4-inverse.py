@@ -114,6 +114,6 @@ def inverse(matrix):
     for i in range(len(matrix)):
         inner = []
         for j in range(len(matrix[0])):
-            inner.append(1 / deter * adj[i][j])
+            inner.append(adj[i][j] / deter)
         inv.append(inner)
     return inv
