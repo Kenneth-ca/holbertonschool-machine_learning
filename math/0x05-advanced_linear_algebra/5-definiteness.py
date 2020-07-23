@@ -13,9 +13,9 @@ def definiteness(matrix):
     :return: if the matrix is positive definite, positive semi-definite,
     negative semi-definite, negative definite of indefinite, respectively
     """
-    if type(matrix) is not np.ndarray:
+    if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
-    if len(matrix.shape) < 2:
+    if len(matrix.shape) != 2:
         return None
     row, col = matrix.shape
     if row != col:
