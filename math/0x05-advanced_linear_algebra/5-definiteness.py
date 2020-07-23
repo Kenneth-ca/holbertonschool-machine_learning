@@ -33,15 +33,15 @@ def definiteness(matrix):
         if i == 0:
             semi = 1
 
-    if pos and not neg and not semi:
+    if pos and not semi and not neg:
         return "Positive definite"
-    elif pos and not neg and semi:
+    elif pos and semi and not neg:
         return "Positive semi-definite"
-    elif not pos and neg and not semi:
+    elif not pos and not semi and neg:
         return "Negative definite"
-    elif not pos and neg and semi:
+    elif not pos and semi and neg:
         return "Negative semi-definite"
-    elif pos and neg and semi:
+    elif pos and not semi and neg:
         return "Indefinite"
     else:
         return None
