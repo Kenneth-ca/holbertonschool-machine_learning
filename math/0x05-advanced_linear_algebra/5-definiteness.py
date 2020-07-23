@@ -41,5 +41,7 @@ def definiteness(matrix):
         return "Negative definite"
     elif not pos and neg and semi:
         return "Negative semi-definite"
-    else:
+    elif pos and neg and semi:
         return "Indefinite"
+    else:
+        return None
