@@ -46,9 +46,9 @@ class MultiNormal:
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
         aux = np.dot((x - self.mean).T, inv)
-        exponent = - (1 / 2) * (np.dot(aux, x - self.mean))
+        exponent = - np.dot(aux, x - self.mean) / 2
 
-        coefficient = ((2 * np.pi) ** (d / 2)) * (det ** (1 / 2))
+        coefficient = ((2 * np.pi) ** (d / 2)) * np.sqrt(det)
         pdf = np.exp(exponent) / coefficient
 
         return pdf[0][0]
