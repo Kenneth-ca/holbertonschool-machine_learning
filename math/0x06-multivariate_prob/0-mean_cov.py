@@ -15,7 +15,11 @@ def mean_cov(X):
         must be a 2D numpy.ndarray
         If n is less than 2, raise a ValueError with the message X must contain
         multiple data points
-    :return:
+    :return: mean, cov:
+        mean is a numpy.ndarray of shape (1, d) containing the mean of the data
+        set
+        cov is a numpy.ndarray of shape (d, d) containing the covariance matrix
+        of the data set
     """
     if type(X) is not np.ndarray:
         raise TypeError("X must be a 2D numpy.ndarray")
