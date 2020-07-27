@@ -39,15 +39,15 @@ class MultiNormal:
         """
         if type(x) is not np.ndarray:
             raise TypeError("x must by a numpy.ndarray")
-        d, aux = x.shape
-        if len(x.shape) != 2 or aux != 1:
+        d = self.cov.shape[0]
+        if len(x.shape) != 2 or x.shape[0] != d or x.shape[1] != 1:
             raise TypeError("x mush have the shape ({}, 1)".format(d))
 
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
         exponent = - (1 / 2) * (x - self.mean).T @ inv @ (x - self.mean)
 
-        coeficient = (2 * np.pi) ** (- d / 2) * det ** (- 1 / 2)
-        pdf = coeficient * np.e ** exponent
+        coefficient = (2 * np.pi) ** (- d / 2) * det ** (- 1 / 2)
+        pdf = coefficient * np.exp(exponent)
 
         return pdf[0][0]
