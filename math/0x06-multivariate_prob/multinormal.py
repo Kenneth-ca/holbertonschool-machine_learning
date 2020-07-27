@@ -48,7 +48,7 @@ class MultiNormal:
         aux = np.dot((x - self.mean).T, inv)
         exponent = - (1 / 2) * (np.dot(aux, x - self.mean))
 
-        coefficient = ((2 * np.pi) ** (- d / 2)) * (det ** (- 1 / 2))
-        pdf = coefficient * np.exp(exponent)
+        coefficient = ((2 * np.pi) ** (d / 2)) * (det ** (1 / 2))
+        pdf = np.exp(exponent) / coefficient
 
         return pdf[0][0]
