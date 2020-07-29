@@ -26,15 +26,16 @@ def P_init(X, perplexity):
     n, d = X.shape
 
     # This method uses cuadratic expansion (x - y)^2 = x^2 - 2xy + y^2
-    # sum_X = np.sum(np.square(X), 1)
-    # D = np.add(np.add(-2 * np.dot(X, X.T), sum_X).T, sum_X)
+    sum_X = np.sum(np.square(X), 1)
+    D = np.add(np.add(-2 * np.dot(X, X.T), sum_X).T, sum_X)
+    np.fill_diagonal(D, 0)
 
     # This method adds a new axis to allow broadcasting and have each the
     # distance between each dimension
     # example shapes: X1 (1, 2500, 50) and X2 (2500, 1, 50)
-    X1 = X[np.newaxis, :, :]
-    X2 = X[:, np.newaxis, :]
-    D = np.sum(np.square(X1 - X2), axis=2)
+    # X1 = X[np.newaxis, :, :]
+    # X2 = X[:, np.newaxis, :]
+    # D = np.sum(np.square(X1 - X2), axis=2)
 
     P = np.zeros((n, n))
 
