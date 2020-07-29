@@ -23,6 +23,9 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     n, d = X.shape
     D, P, betas, H = P_init(X, perplexity)
 
+    if n == 0:
+        return P
+
     for i in range(n):
         copy = D[i].copy()
         copy = np.delete(copy, i, axis=0)
@@ -51,8 +54,5 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
             Hdiff = Hi - H
         Pi = np.insert(Pi, i, 0)
         P[i] = Pi
-    if n == 0:
-        return P
-    else:
-        P = (P.T + P) / (2 * n)
+    P = (P.T + P) / (2 * n)
     return P
