@@ -29,7 +29,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     for i in range(n):
         copy = D[i].copy()
         copy = np.delete(copy, i, axis=0)
-        Hi, Pi = HP(copy, betas[i, 0])
+        Hi, Pi = HP(copy, betas[i])
         Hdiff = Hi - H
 
         low = None
@@ -39,18 +39,18 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
             if Hdiff > 0:
                 low = betas[i, 0]
                 if high is None:
-                    betas[i, 0] = betas[i, 0] * 2
+                    betas[i] = betas[i] * 2
                 else:
-                    betas[i, 0] = (betas[i, 0] + high) / 2
+                    betas[i] = (betas[i] + high) / 2
 
             else:
                 high = betas[i, 0]
                 if low is None:
-                    betas[i, 0] = betas[i, 0] / 2
+                    betas[i] = betas[i] / 2
                 else:
-                    betas[i, 0] = (betas[i, 0] + low) / 2
+                    betas[i] = (betas[i] + low) / 2
 
-            Hi, Pi = HP(copy, betas[i, 0])
+            Hi, Pi = HP(copy, betas[i])
             Hdiff = Hi - H
         Pi = np.insert(Pi, i, 0)
         P[i] = Pi
