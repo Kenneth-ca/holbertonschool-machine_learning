@@ -31,7 +31,7 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
     n, d = X.shape
     gains = np.ones((n, ndims))
     Y = np.random.randn(n, ndims)
-    Y - np.mean(Y, axis=0)
+    # Y - np.mean(Y, axis=0)
     iY = np.zeros((n, ndims))
 
     pca_result = pca(X, idims)
