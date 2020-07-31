@@ -30,17 +30,16 @@ def intersection(x, n, P, Pr):
     if (type(Pr) is not np.ndarray) or (P.shape != Pr.shape):
         raise TypeError("Pr must be a numpy.ndarray with the same shape as P")
 
-    for p in P:
+    for p, pr in zip(P, Pr):
         if not (p >= 0 and p <= 1):
             raise ValueError("All values in P must be in the range [0, "
                              "1]")
-    for pr in Pr:
         if not (pr >= 0 and pr <= 1):
             raise ValueError("All values in Pr must be in the range [0, "
                              "1]")
 
     if not np.isclose(np.sum(Pr), 1):
-        ValueError("Pr must sum to 1")
+        raise ValueError("Pr must sum to 1")
 
     num = np.math.factorial(n)
     den = np.math.factorial(x) * np.math.factorial(n - x)
