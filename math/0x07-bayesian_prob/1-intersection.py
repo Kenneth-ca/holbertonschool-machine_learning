@@ -24,15 +24,19 @@ def intersection(x, n, P, Pr):
                          "to 0")
     if x > n:
         raise ValueError("x cannot be greater than n")
+
     if (type(P) is not np.ndarray) or (len(P.shape) != 1):
         raise TypeError("P must be a 1D numpy.ndarray")
+    if (type(Pr) is not np.ndarray) or (P.shape != Pr.shape):
+        raise TypeError("Pr must be a numpy.ndarray with the same shape as P")
+
     for p, pr in zip(P, Pr):
         if not (p >= 0 and p <= 1):
-            raise ValueError("All values in {} must be in the range [0, "
-                             "1]".format(p))
+            raise ValueError("All values in P must be in the range [0, "
+                             "1]")
         if not (pr >= 0 and pr <= 1):
-            raise ValueError("All values in {} must be in the range [0, "
-                             "1]".format(pr))
+            raise ValueError("All values in Pr must be in the range [0, "
+                             "1]")
 
     if not np.isclose(np.sum(Pr), 1):
         ValueError("Pr must sum to 1")
@@ -41,5 +45,6 @@ def intersection(x, n, P, Pr):
     den = np.math.factorial(x) * np.math.factorial(n - x)
 
     like = num / den * (P ** x) * ((1 - P) ** (n - x))
+    inter = like * Pr
 
-    return like * Pr
+    return inter
