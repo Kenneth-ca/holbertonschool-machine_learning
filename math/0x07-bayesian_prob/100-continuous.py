@@ -32,22 +32,10 @@ def posterior(x, n, p1, p2):
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
 
-    P = (x - (p1 + p2)) / (n - (p1 + p2))
-
-    # Prior is equal to 1 since its uniform
-    # posterior = (P ** x) * ((1 - P) ** (n - x))
     # Uniform prior + binomial likelihood => Beta posterior
-    # gamma_num = special.gamma(n + 2)
-    # gamma_dem = special.gamma(x + 1) * special.gamma(n - x + 1)
-    # gamma = gamma_num / gamma_dem
-    # posterior = gamma * posterior
-    num = special.factorial(n)
-    den = special.factorial(x) * special.factorial(n - x)
-    comb = num / den
-    like = comb * (P ** x) * ((1 - P) ** (n - x))
-    Pr = 1
-    intersection = like * Pr
-    marginal = intersection
-    pos = intersection / marginal
+    # Beta(x + 1, n - x + 1)
+    beta2 = special.btdtr(x + 1, n - x + 1, p2)
+    beta1 = special.btdtr(x + 1, n - x + 1, p1)
+    pos = beta2 - beta1
 
     return pos
