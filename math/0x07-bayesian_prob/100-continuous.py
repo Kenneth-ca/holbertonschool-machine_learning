@@ -40,8 +40,9 @@ def posterior(x, n, p1, p2):
     # Prior is equal to 1 since its uniform
     posterior = (P ** x) * ((1 - P) ** (n - x))
     # Uniform prior + binomial likelihood => Beta posterior
-    gamma = special.gamma(n + 2) / (special.gamma(x + 1) * special.gamma(n -
-                                                                         x + 1))
+    gamma_num = special.gamma(n + 2)
+    gamma_dem = special.gamma(x + 1) * special.gamma(n - x + 1)
+    gamma = gamma_num / gamma_dem
     posterior = gamma * posterior
 
     return np.sum(posterior)
