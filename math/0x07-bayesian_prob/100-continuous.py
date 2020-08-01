@@ -25,24 +25,30 @@ def posterior(x, n, p1, p2):
     if x > n:
         raise ValueError("x cannot be greater than n")
 
-    if type(p1) is not float or type(p2) is not float:
-        if not (p1 >= 0 and p1 <= 1):
-            raise ValueError("p1 must be a float in the range [0, 1]")
-        if not (p2 >= 0 and p2 <= 1):
-            raise ValueError("p2 must be a float in the range [0, 1]")
+    if type(p1) is not float or not 0 <= p1 <= 1:
+        raise ValueError("p1 must be a float in the range [0, 1]")
+    if type(p2) is not float or not 0 <= p2 <= 1:
+        raise ValueError("p2 must be a float in the range [0, 1]")
 
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
 
-    # P = p2 - p1
-    P = 2.075 * (p2 - p1)
+    P = (x - (p1 + p2)) / (n - (p1 + p2))
 
     # Prior is equal to 1 since its uniform
-    posterior = (P ** x) * ((1 - P) ** (n - x))
+    # posterior = (P ** x) * ((1 - P) ** (n - x))
     # Uniform prior + binomial likelihood => Beta posterior
-    gamma_num = special.gamma(n + 2)
-    gamma_dem = special.gamma(x + 1) * special.gamma(n - x + 1)
-    gamma = gamma_num / gamma_dem
-    posterior = gamma * posterior
+    # gamma_num = special.gamma(n + 2)
+    # gamma_dem = special.gamma(x + 1) * special.gamma(n - x + 1)
+    # gamma = gamma_num / gamma_dem
+    # posterior = gamma * posterior
+    num = special.factorial(n)
+    den = special.factorial(x) * special.factorial(n - x)
+    comb = num / den
+    like = comb * (P ** x) * ((1 - P) ** (n - x))
+    Pr = 1
+    intersection = like * Pr
+    marginal = np.sum(intersection)
+    pos = intersection / marginal
 
-    return np.sum(posterior)
+    return pos
