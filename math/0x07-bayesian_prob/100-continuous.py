@@ -2,7 +2,7 @@
 """
 Calculates the posterior for bayes
 """
-from scipy import math, special
+from scipy import special
 
 
 def posterior(x, n, p1, p2):
