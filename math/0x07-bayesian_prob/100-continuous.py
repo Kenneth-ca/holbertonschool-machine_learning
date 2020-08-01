@@ -3,7 +3,6 @@
 Calculates the posterior for bayes
 """
 from scipy import math, special
-import numpy as np
 
 
 def posterior(x, n, p1, p2):
@@ -48,7 +47,7 @@ def posterior(x, n, p1, p2):
     like = comb * (P ** x) * ((1 - P) ** (n - x))
     Pr = 1
     intersection = like * Pr
-    marginal = np.sum(intersection)
+    marginal = intersection
     pos = intersection / marginal
 
     return pos
