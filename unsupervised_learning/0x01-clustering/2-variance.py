@@ -15,11 +15,15 @@ def variance(X, C):
         var is the total variance
     """
     if type(X) is not np.ndarray or len(X.shape) != 2:
-        return None, None
+        return None
     if type(C) is not np.ndarray or len(X.shape) != 2:
-        return None, None
+        return None
+    k, d = C.shape
+    if type(k) is not int or k <= 0:
+        return None
     D = np.sqrt(((X - C[:, np.newaxis]) ** 2).sum(axis=2))
     cluster = np.min(D, axis=0)
 
     var = np.sum(np.square(cluster))
     return var
+
