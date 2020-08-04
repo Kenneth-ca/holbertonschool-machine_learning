@@ -24,6 +24,8 @@ def kmeans(X, k, iterations=1000):
         return None, None
     if type(X) is not np.ndarray or len(X.shape) != 2:
         return None, None
+    if type(iterations) is not int or iterations <= 0:
+        return None, None
     n, d = X.shape
     centroids = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0),
                                   size=(k, d))
