@@ -16,7 +16,7 @@ def variance(X, C):
     """
     if type(X) is not np.ndarray or len(X.shape) != 2:
         return None
-    if type(C) is not np.ndarray or len(X.shape) != 2:
+    if type(C) is not np.ndarray or len(C.shape) != 2:
         return None
     k, d = C.shape
     if type(k) is not int or k <= 0:
@@ -26,4 +26,3 @@ def variance(X, C):
 
     var = np.sum(np.square(cluster))
     return var
-
