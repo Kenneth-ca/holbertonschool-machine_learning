@@ -21,6 +21,8 @@ def variance(X, C):
     k, d = C.shape
     if type(k) is not int or k <= 0:
         return None
+    if X.shape[1] != C.shape[1]:
+        return None
     D = np.sqrt(((X - C[:, np.newaxis]) ** 2).sum(axis=2))
     cluster = np.min(D, axis=0)
 
