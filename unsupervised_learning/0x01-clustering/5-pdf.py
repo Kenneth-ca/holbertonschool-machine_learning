@@ -37,4 +37,6 @@ def pdf(X, m, S):
     third = np.sum(second * (X - m) / -2, axis=1)
     P = first * np.exp(third)
 
+    P = np.maximum(P, 1e-300)
+
     return P
