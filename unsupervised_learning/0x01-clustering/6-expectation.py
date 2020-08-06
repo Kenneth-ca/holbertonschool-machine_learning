@@ -47,6 +47,6 @@ def expectation(X, pi, m, S):
 
     marginal = np.sum(probs, axis=0)
     g = probs / marginal
-    l = np.sum(np.log(marginal))
+    log_likelihood = np.sum(np.log(marginal))
 
-    return g, l
+    return g, log_likelihood
