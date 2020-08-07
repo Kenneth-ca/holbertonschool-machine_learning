@@ -32,7 +32,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         l is the log likelihood of the model
     """
     if type(X) is not np.ndarray or len(X.shape) != 2:
-        return None, None, None, None
+        return None, None, None, None, None
     if type(k) is not int or k <= 0:
         return None, None, None, None, None
     if type(iterations) is not int or iterations <= 0:
@@ -46,7 +46,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     pi, mean, cov = initialize(X, k)
     g, log_like = expectation(X, pi, mean, cov)
     for i in range(iterations):
-        if (np.abs(l_prev - log_like)) <= tol:
+        if (np.abs(l_prev - log_like)) < tol:
             break
         l_prev = log_like
 
