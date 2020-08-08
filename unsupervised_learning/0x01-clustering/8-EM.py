@@ -59,10 +59,6 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
     if verbose is True:
         rounded = log_like.round(5)
-        if i == iterations - 1:
-            print("Log Likelihood after {} iterations: {}".format(i + 1,
-                                                                  rounded))
-        else:
-            print("Log Likelihood after {} iterations: {}".format(i, rounded))
+        print("Log Likelihood after {} iterations: {}".format(i, rounded))
 
     return pi, mean, cov, g, log_like
