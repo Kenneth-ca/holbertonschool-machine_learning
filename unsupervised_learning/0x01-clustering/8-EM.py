@@ -46,7 +46,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     pi, mean, cov = initialize(X, k)
     g, log_like = expectation(X, pi, mean, cov)
     for i in range(iterations):
-        if (np.abs(l_prev - log_like)) < tol:
+        if (np.abs(l_prev - log_like)) <= tol:
             break
         l_prev = log_like
 
