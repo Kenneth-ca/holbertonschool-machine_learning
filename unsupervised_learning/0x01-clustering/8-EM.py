@@ -50,7 +50,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
             break
         l_prev = log_like
 
-        if verbose is True and (i % 10 == 0):
+        if verbose is True and (i % 10 == 0) and i != iterations:
             rounded = log_like.round(5)
             print("Log Likelihood after {} iterations: {}".format(i, rounded))
 
