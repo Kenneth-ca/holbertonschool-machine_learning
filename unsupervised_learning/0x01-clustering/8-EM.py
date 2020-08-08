@@ -45,12 +45,12 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     l_prev = 0
     pi, mean, cov = initialize(X, k)
     g, log_like = expectation(X, pi, mean, cov)
-    for i in range(iterations + 1):
+    for i in range(iterations):
         if (np.abs(l_prev - log_like)) <= tol:
             break
         l_prev = log_like
 
-        if verbose is True and (i % 10 == 0) and i != iterations:
+        if verbose is True and (i % 10 == 0):
             rounded = log_like.round(5)
             print("Log Likelihood after {} iterations: {}".format(i, rounded))
 
@@ -59,6 +59,10 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
     if verbose is True:
         rounded = log_like.round(5)
-        print("Log Likelihood after {} iterations: {}".format(i, rounded))
+        if i == iterations - 1:
+            print("Log Likelihood after {} iterations: {}".format(i + 1,
+                                                                  rounded))
+        else:
+            print("Log Likelihood after {} iterations: {}".format(i, rounded))
 
     return pi, mean, cov, g, log_like
