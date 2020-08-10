@@ -7,9 +7,11 @@ import numpy as np
 
 def regular(P):
     """
-
-    :param P:
-    :return:
+    Determines the steady state probabilities of a regular markov chain
+    :param P: square 2D numpy.ndarray of shape (n, n) representing the
+    transition matrix
+    :return: numpy.ndarray of shape (1, n) containing the steady state
+    probabilities, or None on failure
     """
     if type(P) is not np.ndarray:
         return None
