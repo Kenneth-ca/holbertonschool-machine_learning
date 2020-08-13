@@ -7,8 +7,53 @@ http://www.adeveloperdiary.com/data-science/machine-learning/derivation-and
 -implementation-of-baum-welch-algorithm-for-hidden-markov-model/
 """
 import numpy as np
-forward = __import__('3-forward').forward
-backward = __import__('5-backward').backward
+
+
+def forward(Observation, Emission, Transition, Initial):
+    """
+    Performs the forward algorithm for a hidden markov model
+    """
+
+    N, M = Emission.shape
+    T = Observation.shape[0]
+    if N != Transition.shape[0] or N != Transition.shape[1]:
+        return None, None
+
+    alpha = np.zeros((N, T))
+    alpha[:, 0] = Initial.T * Emission[:, Observation[0]]
+
+    for col in range(1, T):
+        for row in range(N):
+            aux = alpha[:, col - 1] * Transition[:, row]
+            alpha[row, col] = np.sum(aux * Emission[row, Observation[col]])
+
+    P = np.sum(alpha[:, -1])
+
+    return P, alpha
+
+
+def backward(Observation, Emission, Transition, Initial):
+    """
+    Performs the backward algorithm for a hidden markov model
+    """
+    N, M = Emission.shape
+    T = Observation.shape[0]
+    if N != Transition.shape[0] or N != Transition.shape[1]:
+        return None, None
+
+    beta = np.zeros((N, T))
+    beta[:, T - 1] = np.ones((N))
+    # Loop in backward way from T-1 to
+    # Due to python indexing the actual loop will be T-2 to 0
+    for col in range(T - 2, -1, -1):
+        for row in range(N):
+            beta[row, col] = np.sum(beta[:, col + 1] *
+                                    Transition[row, :] *
+                                    Emission[:, Observation[col + 1]])
+
+    P = np.sum(beta[:, 0] * Emission[:, Observation[0]] * Initial.T)
+
+    return P, beta
 
 
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
@@ -75,6 +120,4 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
 
         b = np.divide(b, denominator.reshape((-1, 1)))
 
-    print(a)
-    print(b)
     return a, b
