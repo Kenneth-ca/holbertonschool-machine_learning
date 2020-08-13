@@ -59,8 +59,8 @@ def backward(Observation, Emission, Transition, Initial):
     # Due to python indexing the actual loop will be T-2 to 0
     for col in range(T - 2, -1, -1):
         for row in range(N):
-            aux = Emission[:, Observation[col + 1]] * Transition[row, :]
-            beta[row, col] = beta[:, col + 1] @ aux
+            aux = beta[:, col + 1] * Emission[:, Observation[col + 1]]
+            beta[row, col] = aux @ Transition[row, :]
 
     P = np.sum(Initial.T * Emission[:, Observation[0]] * beta[:, 0])
 
