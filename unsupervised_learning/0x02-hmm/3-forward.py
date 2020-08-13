@@ -58,8 +58,8 @@ def forward(Observation, Emission, Transition, Initial):
 
     for col in range(1, T):
         for row in range(N):
-            aux = Transition[:, row] * Emission[row, Observation[col]]
-            alpha[row, col] = alpha[:, col - 1] @ aux
+            aux = alpha[:, col - 1] * Transition[:, row]
+            alpha[row, col] = np.sum(aux * Emission[row, Observation[col]])
 
     P = np.sum(alpha[:, -1])
 
