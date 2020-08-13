@@ -42,10 +42,11 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     if type(verbose) is not bool:
         return None, None, None, None, None
 
+    i = 0
     l_prev = 0
     pi, mean, cov = initialize(X, k)
     g, log_like = expectation(X, pi, mean, cov)
-    for i in range(iterations):
+    while i < iterations:
         if (np.abs(l_prev - log_like)) <= tol:
             break
         l_prev = log_like
@@ -56,6 +57,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
         pi, mean, cov = maximization(X, g)
         g, log_like = expectation(X, pi, mean, cov)
+        i += 1
 
     if verbose is True:
         rounded = log_like.round(5)
