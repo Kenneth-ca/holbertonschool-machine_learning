@@ -16,8 +16,6 @@ def forward(Observation, Emission, Transition, Initial):
 
     N, M = Emission.shape
     T = Observation.shape[0]
-    if N != Transition.shape[0] or N != Transition.shape[1]:
-        return None, None
 
     alpha = np.zeros((N, T))
     alpha[:, 0] = Initial.T * Emission[:, Observation[0]]
@@ -27,9 +25,9 @@ def forward(Observation, Emission, Transition, Initial):
             aux = alpha[:, col - 1] * Transition[:, row]
             alpha[row, col] = np.sum(aux * Emission[row, Observation[col]])
 
-    P = np.sum(alpha[:, -1])
+    # P = np.sum(alpha[:, -1])
 
-    return P, alpha
+    return alpha
 
 
 def backward(Observation, Emission, Transition, Initial):
@@ -38,8 +36,6 @@ def backward(Observation, Emission, Transition, Initial):
     """
     N, M = Emission.shape
     T = Observation.shape[0]
-    if N != Transition.shape[0] or N != Transition.shape[1]:
-        return None, None
 
     beta = np.zeros((N, T))
     beta[:, T - 1] = np.ones((N))
@@ -51,9 +47,9 @@ def backward(Observation, Emission, Transition, Initial):
                                     Transition[row, :] *
                                     Emission[:, Observation[col + 1]])
 
-    P = np.sum(beta[:, 0] * Emission[:, Observation[0]] * Initial.T)
+    # P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * beta[:, 0])
 
-    return P, beta
+    return beta
 
 
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
@@ -94,8 +90,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     a = Transition.copy()
     b = Emission.copy()
     for n in range(iterations):
-        _, alpha = forward(Observations, b, a, Initial.reshape((-1, 1)))
-        _, beta = backward(Observations, b, a, Initial.reshape((-1, 1)))
+        alpha = forward(Observations, b, a, Initial.reshape((-1, 1)))
+        beta = backward(Observations, b, a, Initial.reshape((-1, 1)))
 
         xi = np.zeros((N, N, T - 1))
         for col in range(T - 1):
