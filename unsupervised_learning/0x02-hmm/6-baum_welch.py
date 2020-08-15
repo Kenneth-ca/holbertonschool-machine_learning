@@ -88,7 +88,7 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         return None, None
 
     # iterations over 454 makes no difference in the output
-    # to check use np.close with atol=1e-5 in a and b (store a_prev)
+    # to check use np.isclose with atol=1e-5 in a and b (store a_prev)
     if iterations > 454:
         iterations = 454
 
