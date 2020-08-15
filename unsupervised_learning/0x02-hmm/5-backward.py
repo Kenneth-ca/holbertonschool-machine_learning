@@ -63,6 +63,6 @@ def backward(Observation, Emission, Transition, Initial):
                                     Transition[row, :] *
                                     Emission[:, Observation[col + 1]])
 
-    P = np.sum(beta[:, 0] * Emission[:, Observation[0]] * Initial.T)
+    P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * beta[:, 0])
 
     return P, beta
