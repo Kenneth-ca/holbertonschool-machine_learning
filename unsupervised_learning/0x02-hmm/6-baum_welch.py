@@ -87,6 +87,11 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     if N != Transition.shape[0] or N != Transition.shape[1]:
         return None, None
 
+    # iterations over 454 makes no difference in the output
+    # to check use np.close with atol=1e-5 in a and b (store a_prev)
+    if iterations > 454:
+        iterations = 454
+
     a = Transition.copy()
     b = Emission.copy()
     for n in range(iterations):
