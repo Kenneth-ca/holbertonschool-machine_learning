@@ -64,8 +64,12 @@ class BayesianOptimization:
             else:
                 Z[i] = 0
 
-        ei = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
-        ei[sigma == 0.0] = 0.0
+        ei = np.zeros(sigma.shape)
+        for i in range(len(sigma)):
+            if sigma[i] > 0:
+                ei[i] = imp[i] * norm.cdf(Z[i]) + sigma[i] * norm.pdf(Z[i])
+            else:
+                ei[i] = 0
 
         X_next = self.X_s[np.argmax(ei)]
 
