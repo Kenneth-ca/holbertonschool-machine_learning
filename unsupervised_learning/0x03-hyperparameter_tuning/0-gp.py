@@ -10,7 +10,6 @@ class GaussianProcess:
     """
     A class that represents a Gaussian process
     """
-
     def __init__(self, X_init, Y_init, l=1, sigma_f=1):
         """
         A function that initializes a class
