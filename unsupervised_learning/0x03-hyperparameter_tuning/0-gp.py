@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Create the class GaussianProcess that represents a noiseless 1D
-Gaussian process
+Create the class GaussianProcess
 """
 import numpy as np
 
