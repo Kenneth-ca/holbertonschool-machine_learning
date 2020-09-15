@@ -12,4 +12,4 @@ def gensim_to_keras(model):
     :param model:
     :return:
     """
-    # return model.wv.get_keras_embedding(train_embeddings=False)
+    return model.wv.get_keras_embedding(train_embeddings=False)
