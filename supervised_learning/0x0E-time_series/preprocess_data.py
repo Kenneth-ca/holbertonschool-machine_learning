@@ -2,7 +2,7 @@
 """
 Script that preprocess bitcoin data to forecast
 """
-import pandas as pd
+# import pandas as pd
 
 
 def cleaning(filename):
