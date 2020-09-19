@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 
-autoencoder = __import__('1-sparse').autoencoder
+autoencoder = __import__('1-sparse').sparse
 
 (x_train, _), (x_test, _) = mnist.load_data()
 x_train = x_train.astype('float32') / 255.

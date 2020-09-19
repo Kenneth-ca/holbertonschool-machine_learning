@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 GP = __import__('2-gp').GaussianProcess
-BO = __import__('4-bayes_opt').BayesianOptimization
+BO = __import__('3-bayes_opt').BayesianOptimization
 import matplotlib.pyplot as plt
 import numpy as np
 
