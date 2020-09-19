@@ -37,8 +37,8 @@ class WindowGenerator:
         # Work out the label column indices.
         self.label_columns = label_columns
         if label_columns is not None:
-          self.label_columns_indices = {name: i for i, name in
-                                        enumerate(label_columns)}
+            self.label_columns_indices = {name: i for i, name in enumerate(
+                label_columns)}
         self.column_indices = {name: i for i, name in
                                enumerate(train_df.columns)}
 
@@ -50,20 +50,21 @@ class WindowGenerator:
         self.total_window_size = input_width + shift
 
         self.input_slice = slice(0, input_width)
-        self.input_indices = np.arange(self.total_window_size)[self.input_slice]
+        self.input_indices = np.arange(self.total_window_size)[
+            self.input_slice]
 
         self.label_start = self.total_window_size - self.label_width
         self.labels_slice = slice(self.label_start, None)
-        self.label_indices = np.arange(self.total_window_size)[self.labels_slice]
+        self.label_indices = np.arange(self.total_window_size)[
+            self.labels_slice]
 
     def split_window(self, features):
         inputs = features[:, self.input_slice, :]
         labels = features[:, self.labels_slice, :]
         if self.label_columns is not None:
             labels = tf.stack(
-                [labels[:, :,
-                 self.column_indices[name]] for name in self.label_columns],
-                 axis=-1)
+                [labels[:, :, self.column_indices[name]] for name in
+                 self.label_columns], axis=-1)
 
         inputs.set_shape([None, self.input_width, None])
         labels.set_shape([None, self.label_width, None])
@@ -119,7 +120,8 @@ class WindowGenerator:
                      label='Inputs', marker='.', zorder=-10)
 
             if self.label_columns:
-                label_col_index = self.label_columns_indices.get(plot_col, None)
+                label_col_index = self.label_columns_indices.get(plot_col,
+                                                                 None)
             else:
                 label_col_index = plot_col_index
 
