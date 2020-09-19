@@ -59,6 +59,11 @@ class WindowGenerator:
             self.labels_slice]
 
     def split_window(self, features):
+        """
+        Split window function
+        :param features: features of the window
+        :return: splited window
+        """
         inputs = features[:, self.input_slice, :]
         labels = features[:, self.labels_slice, :]
         if self.label_columns is not None:
@@ -72,6 +77,11 @@ class WindowGenerator:
         return inputs, labels
 
     def make_dataset(self, data):
+        """
+        Function to keep together the model
+        :param data: data to process
+        :return: dataset created for tensorflow
+        """
         data = np.array(data, dtype=np.float32)
         ds = tf.keras.preprocessing.timeseries_dataset_from_array(
             data=data,
@@ -87,14 +97,26 @@ class WindowGenerator:
 
     @property
     def train(self):
+        """
+        Train dataset
+        :return: object train
+        """
         return self.make_dataset(self.train_df)
 
     @property
     def val(self):
+        """
+        Val of the dataset
+        :return: object val
+        """
         return self.make_dataset(self.val_df)
 
     @property
     def test(self):
+        """
+        Test of the dataset
+        :return: object test
+        """
         return self.make_dataset(self.test_df)
 
     @property
@@ -109,6 +131,13 @@ class WindowGenerator:
         return result
 
     def plot(self, model=None, plot_col='Close', max_subplots=3):
+        """
+        Function to plot many parts of the model
+        :param model: model to plot
+        :param plot_col: column to plot
+        :param max_subplots: number of subplot
+        :return: No return
+        """
         inputs, labels = self.example
         plt.figure(figsize=(12, 8))
         plot_col_index = self.column_indices[plot_col]
@@ -144,6 +173,13 @@ class WindowGenerator:
 
 
 def compile_and_fit(model, window, patience=2):
+    """
+    Function to compile the model
+    :param model: model to compile
+    :param window: splited window
+    :param patience: patience to get of training
+    :return: history of the model
+    """
     early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
                                                       patience=patience,
                                                       mode='min')
