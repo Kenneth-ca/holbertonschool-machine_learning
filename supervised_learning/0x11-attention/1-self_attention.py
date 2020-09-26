@@ -42,9 +42,7 @@ class SelfAttention(tf.keras.layers.Layer):
         hidden = self.W(hidden_states)
         score = self.V(tf.nn.tanh(inputs + hidden))
 
-        softmax = tf.nn.softmax(score, axis=1)
-
-        attention_weights = tf.nn.softmax(softmax, axis=1)
+        attention_weights = tf.nn.softmax(score, axis=1)
         context = attention_weights * s_expanded
         context = tf.reduce_sum(context, axis=1)
 
