@@ -21,10 +21,13 @@ class Dataset:
         self.data_train = examples['train']
         self.data_valid = examples['validation']
 
-        en, pt = self.tokenize_dataset(self.data_train)
+        pt, en = self.tokenize_dataset(self.data_train)
 
-        self.tokenizer_en = en
         self.tokenizer_pt = pt
+        self.tokenizer_en = en
+
+        self.data_train = self.data_train.map(self.tf_encode)
+        self.data_valid = self.data_valid.map(self.tf_encode)
 
     def tokenize_dataset(self, data):
         """
@@ -41,13 +44,13 @@ class Dataset:
                         text.SubwordTextEncoder.
                         build_from_corpus((en.
                                           numpy() for pt, en in
-                                           self.data_train),
+                                           data),
                                           target_vocab_size=2 ** 15))
         tokenizer_en = (tfds.features.
                         text.SubwordTextEncoder.
                         build_from_corpus((pt.
                                           numpy() for pt, en in
-                                           self.data_train),
+                                           data),
                                           target_vocab_size=2 ** 15))
 
         return tokenizer_pt, tokenizer_en
