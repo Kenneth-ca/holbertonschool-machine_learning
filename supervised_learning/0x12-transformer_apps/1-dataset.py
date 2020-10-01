@@ -2,8 +2,8 @@
 """
 Create the class Dataset that loads and preps a dataset for machine translation
 """
+import tensorflow.compat.v2 as tf
 import tensorflow_datasets as tfds
-import tensorflow as tf
 
 
 class Dataset:
@@ -21,9 +21,10 @@ class Dataset:
         self.data_train = examples['train']
         self.data_valid = examples['validation']
 
-        self.tokenizer_en = self.tokenize_dataset(self.data_train)
+        en, pt = self.tokenize_dataset(self.data_train)
 
-        self.tokenizer_pt = self.tokenize_dataset(self.data_train)
+        self.tokenizer_en = en
+        self.tokenizer_pt = pt
 
     def tokenize_dataset(self, data):
         """
