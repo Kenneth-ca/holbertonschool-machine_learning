@@ -39,13 +39,13 @@ class Dataset:
         """
         tokenizer_pt = (tfds.features.
                         text.SubwordTextEncoder.
-                        build_from_corpus((en.
-                                          numpy() for pt,en in self.data_train),
+                        build_from_corpus((en.numpy() for pt,
+                                          en in self.data_train),
                                           target_vocab_size=2 ** 15))
         tokenizer_en = (tfds.features.
                         text.SubwordTextEncoder.
-                        build_from_corpus((pt.
-                                          numpy() for pt,en in self.data_train),
+                        build_from_corpus((pt.numpy() for pt,
+                                          en in self.data_train),
                                           target_vocab_size=2 ** 15))
 
         return tokenizer_pt, tokenizer_en
