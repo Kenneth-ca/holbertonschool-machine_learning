@@ -11,6 +11,7 @@ def from_numpy(array):
     :param array: the np.ndarray from which you should create the pd.DataFrame
     :return: the newly created pd.DataFrame
     """
+    pd.set_option('display.max_columns', None)
     df = pd.DataFrame(array)
     _, n = array.shape
     alphabet = range(65, 65 + n)
