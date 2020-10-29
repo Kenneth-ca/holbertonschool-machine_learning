@@ -8,6 +8,8 @@
 almost a humanities discipline. It's really an attempt to understand human
 intelligence and human cognition.”* —Sebastian Thrun
 
+![Neural Network](https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Colored_neural_network.svg/296px-Colored_neural_network.svg.png)
+
 ### About me 🌐
 Economist who likes coding and do Machine Learning stuff.
 I love the sea, reading books and listen to music.
