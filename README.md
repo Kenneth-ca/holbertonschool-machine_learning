@@ -16,8 +16,8 @@ I love the sea, reading books and listen to music.
 
 [![](https://sourcerer.io/fame/Kenneth-ca/Kenneth-ca/holbertonschool-machine_learning/images/0)](https://sourcerer.io/fame/Kenneth-ca/Kenneth-ca/holbertonschool-machine_learning/links/0)
 
-**Twitter:** [@Kenneth_ca7](http://twitter.com/Kenneth_ca7 "@klichmola")
-**LinkedIn:** [Kenneth Cortes](https://www.linkedin.com/in/carlos-molano-salazar/ "Carlos Molano")
+**Twitter:** [@Kenneth_ca7](http://twitter.com/Kenneth_ca7)
+**LinkedIn:** [Kenneth Cortes](https://www.linkedin.com/in/kenneth-cortes-aguas/)
 
 ## Math 📐
 Mathematical and Statistical foundations
