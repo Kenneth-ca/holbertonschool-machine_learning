@@ -1,4 +1,4 @@
--- Rotten tomatoes
+-- Best genre:Q
 SELECT tv_shows.title, SUM(tv_show_ratings.rate) AS rating
 FROM tv_show_ratings
 JOIN tv_shows
